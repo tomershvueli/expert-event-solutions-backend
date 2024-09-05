@@ -25,6 +25,7 @@
     "fs-extra": "^11.2.0",
     "keystone": "^4.2.1",
     "lodash": "^4.17.21",
+    "nodemailer": "^6.9.15",
     "typescript": "^4.9.5"
   },
   "devDependencies": {
