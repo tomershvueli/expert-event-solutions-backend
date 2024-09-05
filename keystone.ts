@@ -5,6 +5,7 @@ dotenv.config();
 
 import { withAuth, session } from "./auth";
 import * as Models from "./models";
+import { sendEmail } from "./utils/emailSender";
 
 export default withAuth(
   config({
@@ -14,6 +15,19 @@ export default withAuth(
         origin: "*",
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       },
+      extendExpressApp: (app, commonContext) => {
+        app.post("/sendEmail", async (req, res) => {
+          console.log(req.body);
+          const emailText = req.body.phoneNumber ? `User provided phone number: ${req.body.phoneNumber}\n${req.body.text}` : req.body.text;
+          try {
+            await sendEmail(process.env.EMAIL_TO as string, process.env.SMTP_USER as string, req.body.subject, emailText, req.body.replyTo);
+            res.status(200).json({ success: true });
+          } catch (error) {
+            console.error('Error sending email:', error);
+            res.status(500).json({ success: false, error: 'Failed to send email' });
+          }
+        })
+      }
     },
     db: {
       provider: "mysql",
