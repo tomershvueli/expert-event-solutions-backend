@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import { config } from "@keystone-6/core";
+import express from "express";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ export default withAuth(
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       },
       extendExpressApp: (app, commonContext) => {
+        app.use(express.json());
         app.post("/sendEmail", async (req, res) => {
           console.log(req.body);
           const emailText = req.body.phoneNumber ? `User provided phone number: ${req.body.phoneNumber}\n${req.body.text}` : req.body.text;
