@@ -1,5 +1,5 @@
-import nodemailer from 'nodemailer';
-require("dotenv").config()
+import nodemailer from "nodemailer";
+require("dotenv").config();
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -20,11 +20,12 @@ transporter.verify(function (error, success) {
 });
 
 export const sendEmail = async (
-  from: string, 
-  to: string, 
-  subject: string, 
-  text: string, 
-  replyTo: string) => {
+  from: string,
+  to: string,
+  subject: string,
+  text: string,
+  replyTo: string,
+) => {
   const mailOptions = {
     from,
     to,
@@ -35,9 +36,9 @@ export const sendEmail = async (
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully');
+    console.log("Email sent successfully");
   } catch (error) {
-    console.error('Error sending email:', error);
-    throw new Error('Could not send email');
+    console.error("Error sending email:", error);
+    throw new Error("Could not send email");
   }
 };

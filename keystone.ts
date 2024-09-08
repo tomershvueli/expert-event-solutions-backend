@@ -19,16 +19,26 @@ export default withAuth(
       extendExpressApp: (app, commonContext) => {
         app.use(express.json());
         app.post("/sendEmail", async (req, res) => {
-          const emailText = req.body.phoneNumber ? `User provided phone number: ${req.body.phoneNumber}\n${req.body.text}` : req.body.text;
+          const emailText = req.body.phoneNumber
+            ? `User provided phone number: ${req.body.phoneNumber}\n${req.body.text}`
+            : req.body.text;
           try {
-            await sendEmail(process.env.EMAIL_TO as string, process.env.SMTP_USER as string, req.body.subject, emailText, req.body.replyTo);
+            await sendEmail(
+              process.env.EMAIL_TO as string,
+              process.env.SMTP_USER as string,
+              req.body.subject,
+              emailText,
+              req.body.replyTo,
+            );
             res.status(200).json({ success: true });
           } catch (error) {
-            console.error('Error sending email:', error);
-            res.status(500).json({ success: false, error: 'Failed to send email' });
+            console.error("Error sending email:", error);
+            res
+              .status(500)
+              .json({ success: false, error: "Failed to send email" });
           }
-        })
-      }
+        });
+      },
     },
     db: {
       provider: "mysql",
@@ -48,7 +58,8 @@ export default withAuth(
       s3_file_storage: {
         kind: "s3",
         type: "file",
-        bucketName: process.env.S3_BUCKET_NAME || "expert-event-solutions-keystonejs",
+        bucketName:
+          process.env.S3_BUCKET_NAME || "expert-event-solutions-keystonejs",
         region: process.env.S3_REGION || "us-east-2",
         accessKeyId: process.env.S3_ACCESS_KEY_ID || "keystone",
         secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "keystone",
@@ -58,7 +69,8 @@ export default withAuth(
       s3_image_storage: {
         kind: "s3",
         type: "image",
-        bucketName: process.env.S3_BUCKET_NAME || "expert-event-solutions-keystonejs",
+        bucketName:
+          process.env.S3_BUCKET_NAME || "expert-event-solutions-keystonejs",
         region: process.env.S3_REGION || "us-east-2",
         accessKeyId: process.env.S3_ACCESS_KEY_ID || "keystone",
         secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || "keystone",
