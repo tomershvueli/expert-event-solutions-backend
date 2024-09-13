@@ -5,6 +5,9 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      ".keystone/*": ["./node_modules/@keystone-6/core/dist/types/*"]
+    }
   }
 }
