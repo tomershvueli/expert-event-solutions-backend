@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE IF NOT EXISTS `User` (
+CREATE TABLE `User` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL DEFAULT '',
     `email` VARCHAR(191) NOT NULL DEFAULT '',

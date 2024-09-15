@@ -1,6 +1,5 @@
 import { list } from "@keystone-6/core";
 import { checkbox, text, timestamp, select } from "@keystone-6/core/fields";
-// import {relationship} from "@keystone-6/core/fields";
 
 export const CompanyContactInfo = list({
   access: {
@@ -37,9 +36,5 @@ export const CompanyContactInfo = list({
       ],
       defaultValue: "active",
     }),
-    // owner: relationship({
-    //   ref: "User",
-    //   many: false,
-    // })
   },
 });
