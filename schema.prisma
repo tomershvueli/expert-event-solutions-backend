@@ -11,17 +11,19 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model TeamMember {
-  id              String    @id @default(uuid())
-  name            String    @default("")
-  position        String    @default("")
-  bio             String    @default("")
-  image_id        String?
-  image_filesize  Int?
-  image_width     Int?
-  image_height    Int?
-  image_extension String?
-  createdAt       DateTime? @default(now())
+model CompanyContactInfo {
+  id               String    @id @default(uuid())
+  companyName      String    @default("")
+  contactName      String    @default("")
+  contactEmail     String    @unique @default("")
+  contactPhone     String    @default("")
+  isPrimaryContact Boolean   @default(true)
+  country          String    @default("")
+  city             String    @default("")
+  address          String    @default("")
+  createdAt        DateTime? @default(now())
+  updatedAt        DateTime? @default(now()) @updatedAt
+  status           String?   @default("active")
 }
 
 model User {
