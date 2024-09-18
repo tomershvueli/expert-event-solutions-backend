@@ -4,7 +4,7 @@ import { checkbox, text, timestamp, select } from "@keystone-6/core/fields";
 export const CompanyContactInfo = list({
   access: {
     operation: {
-      query: ({ session }) => !!session,
+      query: () => true,
       create: ({ session }) => !!session.data.isAdmin,
       update: ({ session }) => !!session.data.isAdmin,
       delete: ({ session }) => !!session.data.isAdmin,
