@@ -4,7 +4,7 @@ import { text, timestamp, image } from "@keystone-6/core/fields";
 export const TeamMember = list({
   access: {
     operation: {
-      query: ({ session }) => !!session,
+      query: () => true,
       create: ({ session }) => !!session.data.isAdmin,
       update: ({ session }) => !!session.data.isAdmin,
       delete: ({ session }) => !!session.data.isAdmin,
