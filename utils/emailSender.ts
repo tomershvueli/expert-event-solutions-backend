@@ -16,7 +16,7 @@ export const sendEmail = async (
   to: string,
   subject: string,
   text: string,
-  replyTo: string
+  replyTo: string,
 ) => {
   const mailOptions = {
     from,
