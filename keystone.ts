@@ -1,10 +1,12 @@
 import dotenv from "dotenv";
 import { config } from "@keystone-6/core";
+import express from "express";
 
 dotenv.config();
 
 import { withAuth, session } from "./auth";
 import * as Models from "./models";
+import { sendEmail } from "./utils/emailSender";
 
 export default withAuth(
   config({
@@ -13,6 +15,29 @@ export default withAuth(
       cors: {
         origin: "*",
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+      },
+      extendExpressApp: (app) => {
+        app.use(express.json());
+        app.post("/sendEmail", async (req, res) => {
+          const emailText = req.body.phoneNumber
+            ? `User provided phone number: ${req.body.phoneNumber}\n${req.body.text}`
+            : req.body.text;
+          try {
+            await sendEmail(
+              process.env.SMTP_USER as string,
+              process.env.EMAIL_TO as string,
+              req.body.subject,
+              emailText,
+              req.body.replyTo,
+            );
+            res.status(200).json({ success: true });
+          } catch (error) {
+            console.error("Error sending email:", error);
+            res
+              .status(500)
+              .json({ success: false, error: "Failed to send email" });
+          }
+        });
       },
     },
     db: {
