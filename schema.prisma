@@ -26,6 +26,19 @@ model CompanyContactInfo {
   status           String?   @default("active")
 }
 
+model TeamMember {
+  id              String    @id @default(uuid())
+  name            String    @default("")
+  position        String    @default("")
+  bio             String    @default("")
+  image_id        String?
+  image_filesize  Int?
+  image_width     Int?
+  image_height    Int?
+  image_extension String?
+  createdAt       DateTime? @default(now())
+}
+
 model User {
   id            String    @id @default(uuid())
   name          String    @default("")

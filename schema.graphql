@@ -163,6 +163,82 @@ input CompanyContactInfoCreateInput {
   status: String
 }
 
+type TeamMember {
+  id: ID!
+  name: String
+  position: String
+  bio: String
+  image: ImageFieldOutput
+  createdAt: DateTime
+}
+
+type ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  url: String!
+}
+
+enum ImageExtension {
+  jpg
+  png
+  webp
+  gif
+}
+
+input TeamMemberWhereUniqueInput {
+  id: ID
+}
+
+input TeamMemberWhereInput {
+  AND: [TeamMemberWhereInput!]
+  OR: [TeamMemberWhereInput!]
+  NOT: [TeamMemberWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  position: StringFilter
+  bio: StringFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input TeamMemberOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  position: OrderDirection
+  bio: OrderDirection
+  createdAt: OrderDirection
+}
+
+input TeamMemberUpdateInput {
+  name: String
+  position: String
+  bio: String
+  image: ImageFieldInput
+  createdAt: DateTime
+}
+
+input ImageFieldInput {
+  upload: Upload!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input TeamMemberUpdateArgs {
+  where: TeamMemberWhereUniqueInput!
+  data: TeamMemberUpdateInput!
+}
+
+input TeamMemberCreateInput {
+  name: String
+  position: String
+  bio: String
+  image: ImageFieldInput
+  createdAt: DateTime
+}
+
 type User {
   id: ID!
   name: String
@@ -238,6 +314,12 @@ type Mutation {
   updateCompanyContactInfos(data: [CompanyContactInfoUpdateArgs!]!): [CompanyContactInfo]
   deleteCompanyContactInfo(where: CompanyContactInfoWhereUniqueInput!): CompanyContactInfo
   deleteCompanyContactInfos(where: [CompanyContactInfoWhereUniqueInput!]!): [CompanyContactInfo]
+  createTeamMember(data: TeamMemberCreateInput!): TeamMember
+  createTeamMembers(data: [TeamMemberCreateInput!]!): [TeamMember]
+  updateTeamMember(where: TeamMemberWhereUniqueInput!, data: TeamMemberUpdateInput!): TeamMember
+  updateTeamMembers(data: [TeamMemberUpdateArgs!]!): [TeamMember]
+  deleteTeamMember(where: TeamMemberWhereUniqueInput!): TeamMember
+  deleteTeamMembers(where: [TeamMemberWhereUniqueInput!]!): [TeamMember]
   createUser(data: UserCreateInput!): User
   createUsers(data: [UserCreateInput!]!): [User]
   updateUser(where: UserWhereUniqueInput!, data: UserUpdateInput!): User
@@ -270,6 +352,9 @@ type Query {
   companyContactInfos(where: CompanyContactInfoWhereInput! = {}, orderBy: [CompanyContactInfoOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyContactInfoWhereUniqueInput): [CompanyContactInfo!]
   companyContactInfo(where: CompanyContactInfoWhereUniqueInput!): CompanyContactInfo
   companyContactInfosCount(where: CompanyContactInfoWhereInput! = {}): Int
+  teamMembers(where: TeamMemberWhereInput! = {}, orderBy: [TeamMemberOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TeamMemberWhereUniqueInput): [TeamMember!]
+  teamMember(where: TeamMemberWhereUniqueInput!): TeamMember
+  teamMembersCount(where: TeamMemberWhereInput! = {}): Int
   users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
