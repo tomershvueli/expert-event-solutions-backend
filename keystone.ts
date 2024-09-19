@@ -16,7 +16,7 @@ export default withAuth(
         origin: "*",
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       },
-      extendExpressApp: (app, commonContext) => {
+      extendExpressApp: (app) => {
         app.use(express.json());
         app.post("/sendEmail", async (req, res) => {
           const emailText = req.body.phoneNumber
@@ -28,7 +28,7 @@ export default withAuth(
               process.env.SMTP_USER as string,
               req.body.subject,
               emailText,
-              req.body.replyTo,
+              req.body.replyTo
             );
             res.status(200).json({ success: true });
           } catch (error) {
@@ -80,5 +80,5 @@ export default withAuth(
     },
     lists: Models,
     session,
-  }),
+  })
 );
