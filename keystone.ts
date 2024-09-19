@@ -24,8 +24,8 @@ export default withAuth(
             : req.body.text;
           try {
             await sendEmail(
-              process.env.EMAIL_TO as string,
               process.env.SMTP_USER as string,
+              process.env.EMAIL_TO as string,
               req.body.subject,
               emailText,
               req.body.replyTo
